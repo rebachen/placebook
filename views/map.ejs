@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+	<script type="text/javascript" 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNcEsVPWyM4hYmDN4GVle21yrfmECgyCk&sensor=false"></script>
+	<script type="text/javascript">
+		var permCircles= [];
+		var upcomingCircles = [];
+		var socialCircles = [];	
+		function initialize() { 
+		  var geocoder;
+		  geocoder = new google.maps.Geocoder();
+		  var cities = <%- cities %>; 
+		  console.log(cities);
+		  var traveling = <%- traveling %>;
+		  console.log(traveling);
+		  var social = <%- social %>;
+		  console.log(social);
+		  var mapOptions = {
+		    center : new google.maps.LatLng(38, -92),
+		    zoom : 3,
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		  };
+		  var map = new google.maps.Map(document.getElementById("map-canvas"),
+		      mapOptions);
+		  for (city in cities) {
+			geocoder.geocode( { 'address': city }, function(results, status) {
+				var address = results[0].formatted_address;
+				if (status == google.maps.GeocoderStatus.OK) {
+					var center = results[0].geometry.location;
+		            var populationOptions = {
+						strokeColor: '#ff0000',
+		                strokeOpacity: 0.8,
+		                strokeWeight: 2,
+		                fillColor: '#ff0000', 
+		                map: map,
+		                center: center,
+		                radius: cities[address].length*100000, 
+						name: address
+		            }
+		            var cityCircle = new google.maps.Circle(populationOptions);
+				  	google.maps.event.addListener(cityCircle, 'click', function(){
+						$('#city-user-list ul').remove();
+						$('#city-user-list h2').remove();
+						var clickedCity = cityCircle.name;
+						var userlisthead = "<h2>Tartans who live permanently in <br>" + clickedCity + "</h2>";
+						var userlist = "<ul>";
+						for (i in cities[clickedCity]) {
+							var user = cities[clickedCity][i];
+							var listitem = "<li id='" + user._id + "'><a href='/userprofile?id="+ user._id + "'>" + user.first_name + " " + user.last_name + "</a></li>";
+							userlist += listitem;
+						}
+						userlist += "</ul>";
+						$('#city-user-list').append(userlisthead);
+						$('#city-user-list').append(userlist);
+				  	});
+					permCircles.push(cityCircle);
+		        } else {
+		            alert("Geocode was not successful for the following reason: " + status);
+		        }    
+		    });
+		  }
+		$('#perm').change(function(e){
+			var visible = e.target.checked;
+			for (i=0;i<permCircles.length;i++){
+				permCircles[i].setVisible(visible);
+			}
+		});
+
+		  for (place in social) {
+			geocoder.geocode( { 'address': place }, function(results, status) {
+				console.log(place);
+				console.log(results);
+				var address = results[0].formatted_address;
+				if (status == google.maps.GeocoderStatus.OK) {
+					var center = results[0].geometry.location;
+		            var populationOptions = {
+						strokeColor: '#397D02',
+		                strokeOpacity: 0.8,
+		                strokeWeight: 2,
+		                fillColor: '#397D02', 
+		                map: map,
+		                center: center,
+		                radius: 100000, 
+						name: address
+		            }
+		            var socialCircle = new google.maps.Circle(populationOptions);
+				  	google.maps.event.addListener(socialCircle, 'click', function(){
+						$('#city-user-list ul').remove();
+						$('#city-user-list h2').remove();
+						var clickedCity = place;
+						var userlisthead = "<h2>Tartans currently in <br>" + clickedCity + "</h2>";
+						var userlist = "<ul>";
+						for (i in social[clickedCity]) {
+							var user = social[clickedCity][i];
+							var listitem = "<li id='" + user._id + "'><a href='/userprofile?id="+ user._id + "'>" + user.first_name + " " + user.last_name + "</a></li>";
+							userlist += listitem;
+						}
+						userlist += "</ul>";
+						$('#city-user-list').append(userlisthead);
+						$('#city-user-list').append(userlist);
+				  	});
+					socialCircles.push(socialCircle);
+		        } else {
+		            alert("Geocode was not successful for the following reason: " + status);
+		        }    
+		    });
+		  }
+		$('#social').change(function(e){
+			var visible = e.target.checked;
+			for (i=0;i<socialCircles.length;i++){
+				socialCircles[i].setVisible(visible);
+			}
+		});
+		
+		  for (city in traveling) {
+			geocoder.geocode( { 'address': city }, function(result, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					var address = result[0].formatted_address;
+					var center = result[0].geometry.location;
+		            var populationOptions = {
+						strokeColor: '#0000ff',
+		                strokeOpacity: 0.8,
+		                strokeWeight: 2,
+		                fillColor: '#0000ff', 
+		                map: map,
+		                center: center,
+		                radius: traveling[address].length*100000, 
+						name: address
+		            }
+		            var travelCircle = new google.maps.Circle(populationOptions);
+				  	google.maps.event.addListener(travelCircle, 'click', function(){
+						$('#city-user-list ul').remove();
+						$('#city-user-list h2').remove();
+						var clickedCity = travelCircle.name;
+						var userlisthead = "<h2>Tartans traveling to <br>" + clickedCity + "</h2>";
+						var userlist = "<ul>";
+						for (i in traveling[clickedCity]) {
+							var user = traveling[clickedCity][i];
+							var listitem = "<li id='" + user._id + "'><a href='/userprofile?id="+ user._id + "'>" + user.first_name + " " + user.last_name + "</a></li>";
+							userlist += listitem;
+						}
+						userlist += "</ul>";
+						$('#city-user-list').append(userlisthead);
+						$('#city-user-list').append(userlist);
+				  	});
+					upcomingCircles.push(travelCircle);
+		        } else {
+		            alert("Geocode was not successful for the following reason: " + status);
+		        }    
+		    });
+		  }
+		$('#traveling').change(function(e){
+			var visible = e.target.checked;
+			for (i=0;i<upcomingCircles.length;i++){
+				upcomingCircles[i].setVisible(visible);
+			}
+		});
+
+		}
+	</script>
+  </head>
+  <body onload="initialize()">
+	<div class="nav-bar-container">
+		<div class="nav-bar">
+			<p class="logo">Myapp</p>
+			<ul class="navigation">
+				<li><a href="/addtrip">add trip</a></li>
+				<li><a href="/map">map</a></li>
+				<li><a href="/account">profile</a></li>
+				<li><a href="/logout">logout</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="main-container">
+		
+		<div id="map-canvas"></div>
+		<div id="city-user-list">
+			<h2>Click on a region to see who is there</h2>
+		</div>
+		<div class="bottom-filter-container">
+			<div class="bottom-filter-content">
+				<h2>Filter points by...</h2>
+				<ul class="filter-list">
+					<li><input type="checkbox" name="student" value="student" checked="checked">Current Students</li>
+					<li><input type="checkbox" name="alumni" value="alumni" checked="checked">Alumni</li>
+					<li><input id="perm" type="checkbox" name="perm" value="perm" checked="checked" ><div class="color" id="red-box"> </div>Where people live permanently</li>
+					<li><input type="checkbox" name="faculty" value="faculty" checked="checked">Faculty/Staff</li>
+					<li><input id="social" type="checkbox" name="current" value="current" checked="checked"><div class="color" id="yellow-box"> </div>Where people currently are</li>
+					<li><input id="traveling" type="checkbox" name="traveling" value="traveling" checked="checked"><div class="color" id="blue-box"> </div>Where people are traveling to</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+  </body>
+</html>

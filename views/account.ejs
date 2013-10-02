@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+	<script type="text/javascript" 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNcEsVPWyM4hYmDN4GVle21yrfmECgyCk&sensor=false"></script>
+	<script src="/javascripts/main.js"></script>
+  </head>
+  <body>
+	<div class="nav-bar-container">
+		<div class="nav-bar">
+			<p class="logo">Myapp</p>
+			<ul class="navigation">
+				<li><a href="/addtrip">add trip</a></li>
+				<li><a href="/map">map</a></li>
+				<li><a href="/account">profile</a></li>
+				<li><a href="/logout">logout</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="profile-information">
+		<div class="profile-head">
+			<div class="profile-head-content">
+				<h2><%= user.first_name %> <%= user.last_name %></h2>
+				<h3>permanently located in</h3>
+				<% if (user.current_location) {%>
+					<h4><%= user.current_location %></h4>
+				<% } else { %>
+					<h4><%= user.first_name %> hasn't specified anything yet!</h4>
+				<% } %>
+			</div>
+			<div class="profile-status">
+				<p>cmu <%= user.status %></p>
+			</div>
+		</div>
+		<div class="profile-main">
+			<div class="profile-left">
+				<ul class="info-list">
+					<li>
+						<h5>Currently I'm...</h5>
+						<% if (user.current_occupation) { %>
+							<h6><%= user.current_occupation %></h6>
+						<% } else {%>
+							<h6><%= user.first_name %> hasn't specified anything yet!</h6>
+						<% } %>
+					</li>
+					<li>
+						<h5>I am...</h5>
+						<% if (user.current_location) {%>
+							<h6><%= user.home_college %> <%= user.graduation_year %></h6>
+						<% } else {%>
+							<h6><%= user.first_name %> hasn't specified anything yet!</h6>
+						<% } %>
+						<% if (user.primary_major) {%>
+							<h6>(<%= user.primary_major %>)</h6>
+						<% }%>
+						<% if (user.secondary_major) { %>
+							<h6>(<%= user.secondary_major %>)</h6>
+						<% } %>
+					</li>
+					<li>
+						<h5>To contact me...</h5>
+						<h6><%= user.email %></h6>
+					</li>
+				</ul>
+				<div class="edit-profile">
+					<img id="edit-image" src="images/edit.png" />
+					<a id="edit-link" href="/editprofile">Edit your profile</a>
+				</div>
+			</div>
+			<div class="profile-right">
+				<% if (user.upcoming_trips.location ) {%>
+					<div class="profile-right-top">
+						<h7>Upcoming trips:</h7>
+						<ul class="info-list">
+							<li>
+								<h5>I'm going to...</h5>
+								<h6><%= user.upcoming_trips.location %></h6>
+							</li>
+							<li>
+								<h5>From...</h5>
+								<h6><%= user.upcoming_trips.from %></h6>
+							</li>
+							<li>
+								<h5>Until...</h5>
+								<h6><%= user.upcoming_trips.to %></h6>
+							</li>
+							<li>
+								<h5>While I'm there...</h5>
+								<h6><%= user.upcoming_trips.why %></h6>
+							</li>
+						</ul>
+					</div>
+				<% } else { %>
+					<div class="profile-right-top">
+						<h7>Upcoming Trips:</h7>
+						<h5><%= user.first_name %> has no upcoming trips!</h5>
+					</div>
+				<% } %>
+				<div class="profile-right-bottom">
+					<h7>Connect this application with:</h7>
+					<ul class="connect-list">
+						<li>
+							<span class="connect-image"><img src="images/facebook.png"></span>
+							<span class="connect-text">Your Facebook account</span>
+						</li>
+						<li>
+							<span class="connect-image"><img src="images/twitter.png"></span>
+							<span class="connect-text">Your Twitter account</span>
+						</li>
+						<% if (user.foursquare) { %>
+							<li>
+								<span class="connect-image"><img src="images/foursquare.png"></span>
+								<span class="connect-text" id="foursquare" data-token=<%= user.foursquare %> ><a href="/foursquareauth">Foursquare account successfully connected! </a></span>
+							</li>
+						<% } else { %>
+							<li>
+								<span class="connect-image"><img src="images/foursquare.png"></span>
+								<span class="connect-text"><a href="/foursquareauth">Your Foursquare Account</a></span>
+							</li>
+						<% } %>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer" id="small-space-footer">
+		<p>
+			<span class="footer-item">Carnegie Mellon University</span>
+			<span class="footer-item">-</span>
+			<span class="Footer-item">Rebecca Chen</span>
+			<span class="footer-item">-</span>
+			<span class="footer-item">IT Consulting</span>
+	</div>
+
+	
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+	<script type="text/javascript" 		src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#status').val('<%= user.status %>' );
+			$('#home-college').val('<%= user.home_college %>');	
+							
+		});
+		function initialize() {
+			var input = document.getElementById('currentlocation');
+			var autocomplete = new google.maps.places.Autocomplete(input);
+		}
+	</script>
+  </head>
+  <body onload='initialize()'>
+	<div class="nav-bar-container">
+		<div class="nav-bar">
+			<p class="logo">Myapp</p>
+			<ul class="navigation">
+				<li><a href="/addtrip">add trip</a></li>
+				<li><a href="/map">map</a></li>
+				<li><a href="/account">profile</a></li>
+				<li><a href="/logout">logout</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="form" id="sign-up-form">
+		<div class="form-header">
+			<img class="form-image" src="/images/profile.png" />
+			<h3 class="form-heading">Edit your profile</h3>
+		</div>
+		<form class="general-form" action="/editaccount" method="post">
+			<div>
+				<input type="text" id="firstname" name="first_name" placeholder="your first name" value=<%= user.first_name %> />
+			</div>
+			<div>
+				<input type="text" id="lastname" name="last_name" placeholder="your last name" value=<%= user.last_name %> />
+			</div>
+			<div>
+				<select class="half-width-input" id="status" name="status" placeholder="status" >
+					<option value="student">Student</option>
+					<option value="alumni">Alumni</option>
+				  	<option value="faculty">Faculty</option>
+				  	<option value="staffs">Staff</option>
+				</select>
+			</div>
+			<div>
+				<% if (user.current_location) {%>
+					<input type="text" id="currentlocation" name="current_location" placeholder="where are you currently living?" value="<%= user.current_location %>" />
+				<% } else { %>
+					<input type="text" id="currentlocation" name="current_location" placeholder="where are you currently located?" />					
+				<% } %>
+			</div>
+			<div>
+				<% if (user.current_occupation) {%>
+					<input type="text" id="currentoccupation" name="currentoccupation" placeholder="what is your current occupation?" value="<%= user.current_occupation %>" />
+				<% } else { %>
+					<input type="text" id="currentoccupation" name="currentoccupation" placeholder="what is your current occupation?" />					
+				<% } %>
+			</div>
+			<div>
+				<select class="half-width-input" id="home-college" name="homecollege" placeholder="home college">
+					<option value="cit">College Institute of Technology</option>
+					<option value="cfa">College of Fine Arts</option>
+				  	<option value="dc">Dietrich College</option>
+				  	<option value="mcs">Mellon College of Science</option>
+				  	<option value="scs">School of Computer Science</option>
+				  	<option value="tsb">Tepper School of Business</option>
+				  	<option value="tsb">Heinz College</option>
+				</select>
+			</div>
+			<div>
+				<% if (user.graduation_year) { %>
+					<input type="text" id="graduationyear" name="graduation_year" placeholder="what year did you graduate?" value=<%= user.graduation_year %> />
+				<% } else { %>
+					<input type="text" id="graduationyear" name="graduation_year" placeholder="what year did you graduate?" />			
+				<% } %>
+			</div>
+			<div>
+				<% if (user.primary_major) { %>
+					<input type="text" id="primarymajor" name="primary_major" placeholder="what is your primary major?" value="<%= user.primary_major %>" />
+				<% } else { %>
+					<input type="text" id="primarymajor" name="primary_major" placeholder="what is your primary major?" />			
+				<% } %>
+			</div>
+			<div>
+				<% if (user.secondary_major) { %>
+					<input type="text" id="secondarymajor" name="secondary_major" placeholder="what is your secondary major?" value="<%= user.secondary_major %>" />
+				<% } else { %>
+					<input type="text" id="secondarymajor" name="secondary_major" placeholder="what is your secondary major?" />			
+				<% } %>
+			</div>
+			<div>
+				<input type="text" id="email" name="email" placeholder="email" value=<%= user.email %> />
+			</div>
+			<div class="submit-container">
+				<input type="submit" id="submit-button" value="Update your information" /> 
+			</div>
+		</form>
+	</div>
+	<div class="footer" id="small-space-footer">
+		<p>
+			<span class="footer-item">Carnegie Mellon University</span>
+			<span class="footer-item">-</span>
+			<span class="Footer-item">Rebecca Chen</span>
+			<span class="footer-item">-</span>
+			<span class="footer-item">IT Consulting</span>
+	</div>
+	</body>
+</html>

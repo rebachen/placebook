@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IT Consulting</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script type="text/javascript" 		src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>	
+	<script type="text/javascript">
+		function initialize() {
+			var input = document.getElementById('location');
+			var autocomplete = new google.maps.places.Autocomplete(input);
+		}
+	</script>
+  </head>
+  <body onload="initialize()">
+	<div class="nav-bar-container">
+		<div class="nav-bar">
+			<p class="logo">Myapp</p>
+			<ul class="navigation">
+				<li><a href="/addtrip">add trip</a></li>
+				<li><a href="/map">map</a></li>
+				<li><a href="/account">profile</a></li>
+				<li><a href="/logout">logout</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="form" id="sign-up-form">
+		<div class="form-header">
+			<img class="form-image" src="/images/signup.png" />
+			<h3 class="form-heading">Add a New Trip</h3>
+		</div>
+		<form class="general-form" action="/submittrip" method="post">
+			<div>
+				<input type="text" id="location" name="location" placeholder="where are you going?"/>
+			</div>
+			<div>
+				<input type="text" id="fromdate" name="fromdate" placeholder="when are you arriving?"/>
+			</div>
+			<div>
+				<input type="text" id="todate" name="todate" placeholder="when are you leaving?" />
+			</div>
+			<div>
+				<textarea id="why" name="why" placeholder="feel free to add any other information you'd like to share with others. For example, what will you be doing? When will you be free? Would you like to meet up with other tartans? "/></textarea>
+			</div>
+			<div>
+				<input type="submit" id="submit-button" value="Add your trip" /> 
+			</div>
+		</form>
+	</div>
+
+	<div class="footer">
+		<p>
+			<span class="footer-item">Carnegie Mellon University</span>
+			<span class="footer-item">-</span>
+			<span class="Footer-item">Rebecca Chen</span>
+			<span class="footer-item">-</span>
+			<span class="footer-item">IT Consulting</span>
+	</div>
+	
+  </body>
+</html>

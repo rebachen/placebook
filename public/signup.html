@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IT Consulting</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+	<script src="/javascripts/main.js"></script>
+  </head>
+  <body>
+	<div class="nav-bar-container">
+		<div class="nav-bar">
+			<p class="logo">Myapp</p>
+			<ul class="navigation">
+				<li>add trip</li>
+				<li>map</li>
+				<li>profile</li>
+				<li>login</li>
+			</ul>
+		</div>
+	</div>
+	<div class="form" id="sign-up-form">
+		<div class="form-header">
+			<img class="form-image" src="/images/signup.png" />
+			<h3 class="form-heading">Create an account</h3>
+		</div>
+		<form class="general-form" action="/suaccount" method="post">
+			<div>
+				<input type="text" id="first-name" name="first_name" placeholder="your first name"/>
+			</div>
+			<div>
+				<input type="text" id="last-name" name="last_name" placeholder="your last name"/>
+			</div>
+			<div>
+				<select class="half-width-input" id="status" name="status" placeholder="status">
+					<option value="student">Student</option>
+					<option value="alumni">Alumni</option>
+				  	<option value="faculty">Faculty</option>
+				  	<option value="staff">Staff</option>
+				</select>
+			</div>
+			<div>
+				<input type="text" id="email" name="email" placeholder="your email"/>
+			</div>
+			<div>
+				<input type="password" id="password" name="password" placeholder="your password" />
+			</div>
+			<div>
+				<input type="submit" id="submit-button" value="Sign Up" /> 
+			</div>
+		</form>
+	</div>
+
+	<div class="footer">
+		<p>
+			<span class="footer-item">Carnegie Mellon University</span>
+			<span class="footer-item">-</span>
+			<span class="Footer-item">Rebecca Chen</span>
+			<span class="footer-item">-</span>
+			<span class="footer-item">IT Consulting</span>
+	</div>
+
+
+  </body>
+</html>

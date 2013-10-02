@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IT Consulting</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="/javascripts/main.js"></script>
+  </head>
+  <body>
+	<div class="log-in">
+		<form action="/login" method="post">
+		    <div>
+		        <label>Email:</label>
+		        <input type="text" name="email"/>
+		    </div>
+		    <div>
+		        <label>Password:</label>
+		        <input type="password" name="password"/>
+		    </div>
+		    <div>
+		        <input type="submit" value="Log In"/>
+		    </div>
+		</form>
+	</div>
+	
+	<div class="account-page">
+		<div class="connections">
+			<input id="foursquareConnect" type="submit" value="Connect with Foursquare" />
+			<p><a href="https://foursquare.com/oauth2/authenticate?client_id=RHDWWG2YDEERMJW0YJAD5B43H3CYJ25CKUL5DGCUTZNOJ2DI&response_type=code&redirect_uri=www.rebchen.com">Connect with Foursquare</a></p>
+		</div>
+	</div>
+  </body>
+</html>
